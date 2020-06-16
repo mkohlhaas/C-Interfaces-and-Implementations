@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef SEQ_INCLUDED
 #define SEQ_INCLUDED
 #define T Seq_T

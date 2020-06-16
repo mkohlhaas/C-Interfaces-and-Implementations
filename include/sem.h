@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef SEM_INCLUDED
 #define SEM_INCLUDED
 #define T Sem_T

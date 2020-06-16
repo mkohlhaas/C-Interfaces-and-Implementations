@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef ARRAYREP_INCLUDED
 #define ARRAYREP_INCLUDED
 #define T Array_T

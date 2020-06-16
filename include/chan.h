@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef CHAN_INCLUDED
 #define CHAN_INCLUDED
 #define T Chan_T

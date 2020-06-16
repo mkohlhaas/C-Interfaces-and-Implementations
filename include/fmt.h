@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef FMT_INCLUDED
 #define FMT_INCLUDED
 #include "except.h"

@@ -1,4 +1,3 @@
-/* $Id$ */
 #undef assert
 #ifdef NDEBUG
 #define assert(e) ((void)0)

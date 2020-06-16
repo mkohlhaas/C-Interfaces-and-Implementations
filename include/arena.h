@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef ARENA_INCLUDED
 #define ARENA_INCLUDED
 #include "except.h"

@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef LIST_INCLUDED
 #define LIST_INCLUDED
 #define T List_T

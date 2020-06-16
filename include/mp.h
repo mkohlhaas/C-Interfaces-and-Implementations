@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef MP_INCLUDED
 #define MP_INCLUDED
 #include "except.h"

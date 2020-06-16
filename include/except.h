@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef EXCEPT_INCLUDED
 #define EXCEPT_INCLUDED
 #include <setjmp.h>

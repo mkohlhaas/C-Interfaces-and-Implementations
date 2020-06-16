@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef AP_INCLUDED
 #define AP_INCLUDED
 #include "fmt.h"

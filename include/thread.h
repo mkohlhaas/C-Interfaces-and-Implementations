@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef THREAD_INCLUDED
 #define THREAD_INCLUDED
 #include "except.h"

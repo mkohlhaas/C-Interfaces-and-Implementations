@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef BIT_INCLUDED
 #define BIT_INCLUDED
 #define T Bit_T

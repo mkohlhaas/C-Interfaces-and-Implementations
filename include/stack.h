@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef STACK_INCLUDED
 #define STACK_INCLUDED
 #define T Stack_T

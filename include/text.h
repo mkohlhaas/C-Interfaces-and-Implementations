@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef TEXT_INCLUDED
 #define TEXT_INCLUDED
 #include "fmt.h"

@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef XP_INCLUDED
 #define XP_INCLUDED
 #define T XP_T

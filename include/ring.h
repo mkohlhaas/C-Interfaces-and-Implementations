@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef RING_INCLUDED
 #define RING_INCLUDED
 #define T Ring_T

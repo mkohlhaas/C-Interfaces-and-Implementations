@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef SET_INCLUDED
 #define SET_INCLUDED
 #define T Set_T

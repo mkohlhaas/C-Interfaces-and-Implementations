@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef TABLE_INCLUDED
 #define TABLE_INCLUDED
 #define T Table_T
