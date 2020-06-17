@@ -81,7 +81,7 @@ void sort(int *x, int n, int argc, char *argv[]) {
   quick(&args);
   Thread_join(NULL);
 }
-main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
   int i, n = 100000, *x, preempt;
   preempt = Thread_init(1, NULL);
   assert(preempt == 1);
