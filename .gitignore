@@ -41,6 +41,7 @@
 *.x86_64
 *.hex
 aout
+/bin
 
 # Debug files
 *.dSYM/
