@@ -1,40 +1,40 @@
 vpath %.c src examples
-vpath %.o obj
+vpath %.o build/obj
 
 CFLAGS := -I include -g
-LDLIBS := -L lib
+LDLIBS := -L build/lib
 LOADLIBES := -lcii
 ARFLAGS := r
 
 libsrc := $(notdir $(wildcard src/*.c)) 
-libobjs := $(foreach obj, $(libsrc:.c=.o), obj/$(obj))
-libdeps := $(foreach dep, $(libsrc:.c=.d), dep/$(dep))
+libobjs := $(foreach obj, $(libsrc:.c=.o), build/obj/$(obj))
+libdeps := $(foreach dep, $(libsrc:.c=.d), build/dep/$(dep))
 
 examplesrc := $(notdir $(wildcard examples/*.c))
-exampleobjs := $(foreach obj, $(examplesrc:.c=.o), obj/$(obj))
-exampledeps := $(foreach dep, $(examplesrc:.c=.d), dep/$(dep))
-examplebins := $(foreach bin, $(examplesrc:.c=), bin/$(bin))
+exampleobjs := $(foreach obj, $(examplesrc:.c=.o), build/obj/$(obj))
+exampledeps := $(foreach dep, $(examplesrc:.c=.d), build/dep/$(dep))
+examplebins := $(foreach bin, $(examplesrc:.c=), build/bin/$(bin))
 
 .PHONY: all
-all: lib/libcii.a $(exampleobjs) $(examplebins)
+all: build/lib/libcii.a $(exampleobjs) $(examplebins)
 
 .PHONY: clean
 clean:
-	@-rm -rf lib/ bin/ obj/ dep/ 
+	@-rm -rf build/
 
-lib/libcii.a: $(libobjs)
+build/lib/libcii.a: $(libobjs)
 	@mkdir -p $(@D)
 	@$(AR) $(ARFLAGS) $@ $^
 
-bin/%: %.o
+build/bin/%: %.o
 	@mkdir -p $(@D)
 	@$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
-obj/%.o: %.c
+build/obj/%.o: %.c
 	@mkdir -p $(@D)
 	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
-dep/%.d: %.c
+build/dep/%.d: %.c
 	@mkdir -p $(@D)
 	@$(COMPILE.c) -MM -MF $@ $<
 	@sed -i '1s|^|obj/|' $@

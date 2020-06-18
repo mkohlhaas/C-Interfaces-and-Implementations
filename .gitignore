@@ -1,6 +1,5 @@
-
-# Created by https://www.toptal.com/developers/gitignore/api/c
-# Edit at https://www.toptal.com/developers/gitignore?templates=c
+# Build directory
+build/
 
 ### C ###
 # Prerequisites
@@ -41,7 +40,6 @@
 *.x86_64
 *.hex
 aout
-/bin
 
 # Debug files
 *.dSYM/
@@ -57,5 +55,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-
-# End of https://www.toptal.com/developers/gitignore/api/c
