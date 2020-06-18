@@ -1,35 +1,54 @@
-vpath %.c src:examples
-vpath %.d dep
-vpath %.o obj
-vpath %.a lib
-# vpath %.h include
+CFLAGS := -I include
+LDLIBS := -L lib
+LOADLIBES := -lcii
 
-libsrc := $(notdir $(wildcard src/*.c))
-libobjs := $(libsrc:%.c=%.o)
-libdeps := $(libsrc:.c=.d)
+libsrc := $(notdir $(wildcard src/*.c)) 
+libobjs := $(foreach obj, $(libsrc:.c=.o), obj/$(obj))
+libdeps := $(foreach dep, $(libsrc:.c=.d), dep/$(dep))
+
 examplesrc := $(notdir $(wildcard examples/*.c))
-exampleobjs := $(examplesrc:%.c=%.o)
-exampledeps := $(examplesrc:.c=.d)
+exampleobjs := $(foreach obj, $(examplesrc:.c=.o), obj/$(obj))
+exampledeps := $(foreach dep, $(examplesrc:.c=.d), dep/$(dep))
+examplebins := $(foreach bin, $(examplesrc:.c=), bin/$(bin))
 
-all: examples objs
+.PHONY: all
+all: examples
 
-libcii: $(libobjs)
-	$(AR) rcs lib/$@ $^
+.PHONY: archive
+archive: lib/libcii.a
 
-objs: $(libobjs) $(libdeps)
+lib/libcii.a: $(libobjs)
+	$(AR) $(ARFLAGS) $@ $^
 
-examples: $(exampleobjs) $(exampledeps)
+.PHONY: examples
+examples: archive exampleobj $(examplebins)
 
-%.o: %.c
-	@$(COMPILE.c) -Iinclude -o obj/$@ $<
-
-%.d: %.c
-	@$(COMPILE.c) -Iinclude -MM -MP -MF dep/$@ $<
+.PHONY: exampleobj
+exampleobj: $(exampleobjs)
 
 .PHONY: clean
 clean:
 	-find -name '*.[od]' -exec rm {} \;
-	-rm lib/libcii
+	-rm -f lib/libcii.a
+	-rm -f libcii.a
+	-rm -f dep/*
 
--include $(deps)
+bin/%: obj/%.o
+	$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
+obj/%.o: examples/%.c
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
+
+obj/%.o: src/%.c
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
+
+dep/%.d: src/%.c
+	@$(COMPILE.c) -MM -MF $@ $<
+	sed -i '1s/^/obj\//' $@
+
+dep/%.d: examples/%.c
+	@$(COMPILE.c) -MM -MF $@ $<
+	sed -i '1s|^|obj/|' $@
+
+-include $(libdeps)
+-include $(exampledeps)
