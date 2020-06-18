@@ -1,4 +1,7 @@
-CFLAGS := -I include
+vpath %.c src examples
+vpath %.o obj
+
+CFLAGS := -I include -g
 LDLIBS := -L lib
 LOADLIBES := -lcii
 ARFLAGS := r
@@ -13,38 +16,26 @@ exampledeps := $(foreach dep, $(examplesrc:.c=.d), dep/$(dep))
 examplebins := $(foreach bin, $(examplesrc:.c=), bin/$(bin))
 
 .PHONY: all
-all: examples
-
-.PHONY: archive
-archive: lib/libcii.a
-
-lib/libcii.a: $(libobjs)
-	@$(AR) $(ARFLAGS) $@ $^
-
-.PHONY: examples
-examples: archive exampleobj $(examplebins)
-
-.PHONY: exampleobj
-exampleobj: $(exampleobjs)
+all: lib/libcii.a $(exampleobjs) $(examplebins)
 
 .PHONY: clean
 clean:
-	@-rm -f lib/* dep/* bin/* obj/*
+	@-rm -rf lib/ bin/ obj/ dep/ 
 
-bin/%: obj/%.o
+lib/libcii.a: $(libobjs)
+	@mkdir -p $(@D)
+	@$(AR) $(ARFLAGS) $@ $^
+
+bin/%: %.o
+	@mkdir -p $(@D)
 	@$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
-obj/%.o: examples/%.c
+obj/%.o: %.c
+	@mkdir -p $(@D)
 	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
-obj/%.o: src/%.c
-	$(COMPILE.c) $(OUTPUT_OPTION) $<
-
-dep/%.d: src/%.c
-	@$(COMPILE.c) -MM -MF $@ $<
-	@sed -i '1s/^/obj\//' $@
-
-dep/%.d: examples/%.c
+dep/%.d: %.c
+	@mkdir -p $(@D)
 	@$(COMPILE.c) -MM -MF $@ $<
 	@sed -i '1s|^|obj/|' $@
 
