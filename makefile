@@ -39,5 +39,5 @@ build/dep/%.d: %.c
 	@$(COMPILE.c) -MM -MF $@ $<
 	@sed -i '1s|^|obj/|' $@
 
--include $(lib_deps)
--include $(example_deps)
+include $(lib_deps)
+include $(example_deps)
