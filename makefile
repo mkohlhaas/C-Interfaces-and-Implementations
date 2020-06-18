@@ -2,8 +2,8 @@ vpath %.c src examples
 vpath %.o build/obj
 
 CFLAGS := -I include -g
-LDLIBS := -L build/lib
-LOADLIBES := -lcii
+LDFLAGS := -L build/lib
+LDLIBS := -lcii
 ARFLAGS := r
 
 lib_src := $(notdir $(wildcard src/*.c)) 
@@ -28,7 +28,7 @@ build/lib/libcii.a: $(lib_objs)
 
 build/bin/%: %.o
 	@mkdir -p $(@D)
-	@$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
+	@$(LINK.o) $^ $(LDFLAGS) $(LDLIBS) -o $@
 
 build/obj/%.o: %.c
 	@mkdir -p $(@D)
