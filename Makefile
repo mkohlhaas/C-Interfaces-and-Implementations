@@ -1,6 +1,7 @@
 CFLAGS := -I include
 LDLIBS := -L lib
 LOADLIBES := -lcii
+ARFLAGS := r
 
 libsrc := $(notdir $(wildcard src/*.c)) 
 libobjs := $(foreach obj, $(libsrc:.c=.o), obj/$(obj))
@@ -18,7 +19,7 @@ all: examples
 archive: lib/libcii.a
 
 lib/libcii.a: $(libobjs)
-	$(AR) $(ARFLAGS) $@ $^
+	@$(AR) $(ARFLAGS) $@ $^
 
 .PHONY: examples
 examples: archive exampleobj $(examplebins)
@@ -28,13 +29,10 @@ exampleobj: $(exampleobjs)
 
 .PHONY: clean
 clean:
-	-find -name '*.[od]' -exec rm {} \;
-	-rm -f lib/libcii.a
-	-rm -f libcii.a
-	-rm -f dep/*
+	@-rm -f lib/* dep/* bin/* obj/*
 
 bin/%: obj/%.o
-	$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
+	@$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
 obj/%.o: examples/%.c
 	$(COMPILE.c) $(OUTPUT_OPTION) $<
@@ -44,11 +42,11 @@ obj/%.o: src/%.c
 
 dep/%.d: src/%.c
 	@$(COMPILE.c) -MM -MF $@ $<
-	sed -i '1s/^/obj\//' $@
+	@sed -i '1s/^/obj\//' $@
 
 dep/%.d: examples/%.c
 	@$(COMPILE.c) -MM -MF $@ $<
-	sed -i '1s|^|obj/|' $@
+	@sed -i '1s|^|obj/|' $@
 
 -include $(libdeps)
 -include $(exampledeps)
